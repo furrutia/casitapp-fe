@@ -34,9 +34,19 @@ export const HouseDetail = ({ house, onBack, onAddFavorite, onRemoveFavorite, is
                     </div>
                 </div>
                 {showAlert && (
-                    <div className="alert alert-success" role="alert">
-                        {isFavorite ? '¡Casa quitada de favoritos!' : '¡Casa agregada a favoritos!'}
-                    </div>
+                    // <div className="alert alert-success" role="alert">
+                    //     {isFavorite ? '¡Casa agregada a favoritos!' : '¡Casa quitada de favoritos!'}
+                    // </div>
+                    ( isFavorite && 
+                        <div className="alert alert-success" role="alert">
+                            ¡Casa agregada a favoritos!
+                        </div>
+                    ) ||
+                    ( !isFavorite && 
+                        <div className="alert alert-danger" role="alert">
+                            ¡Casa quitada de favoritos!
+                        </div>
+                    )
                 )}
                 {isFavorite ? (
                     <button className="btn btn-danger me-2" onClick={handleRemoveFavorite}>
