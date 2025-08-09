@@ -1,20 +1,12 @@
 import { useState } from 'react';
+import { neighborhoods } from '../data';
 
-const neighborhoods = [
-    "Alvarez del Bosque",
-    "Fincas de Alvarez",
-    "Haras Maria Elena",
-    "La Cesarina",
-    "Prados del Oeste",
-    "Solares de Zapiola"
-];
-
-export const HouseFilter = ({ onFilter }) => {
-    const [valueFrom, setValueFrom] = useState('');
-    const [valueTo, setValueTo] = useState('');
-    const [neighborhood, setNeighborhood] = useState('');
-    const [rooms, setRooms] = useState('');
-    const [bathrooms, setBathrooms] = useState('');
+export const HouseFilter = ({ onFilter, filters }) => {
+    const [valueFrom, setValueFrom] = useState(filters.valueFrom || '');
+    const [valueTo, setValueTo] = useState(filters.valueTo || '');
+    const [neighborhood, setNeighborhood] = useState(filters.neighborhood || '');
+    const [rooms, setRooms] = useState(filters.rooms || '');
+    const [bathrooms, setBathrooms] = useState(filters.bathrooms || '');
 
     const handleFilter = (e) => {
         e.preventDefault();
@@ -34,6 +26,7 @@ export const HouseFilter = ({ onFilter }) => {
         <form onSubmit={handleFilter} className="mb-4">
             <div className="row g-3 align-items-end">
                 <div className="col-md-3">
+                    {/* Barrio */}
                     <label className="form-label">Barrio</label>
                     <input
                         type="text"
@@ -50,6 +43,7 @@ export const HouseFilter = ({ onFilter }) => {
                     </datalist>
                 </div>
                 <div className="col-md-2">
+                    {/* Valor desde */}
                     <label className="form-label">Valor desde</label>
                     <input
                         type="number"
@@ -60,6 +54,7 @@ export const HouseFilter = ({ onFilter }) => {
                     />
                 </div>
                 <div className="col-md-2">
+                    {/* Valor hasta */}
                     <label className="form-label">Valor hasta</label>
                     <input
                         type="number"
@@ -70,6 +65,7 @@ export const HouseFilter = ({ onFilter }) => {
                     />
                 </div>
                 <div className="col-md-2">
+                    {/* Ambientes */}
                     <label className="form-label">Ambientes</label>
                     <input
                         type="number"
@@ -80,6 +76,7 @@ export const HouseFilter = ({ onFilter }) => {
                     />
                 </div>
                 <div className="col-md-1">
+                    {/* Baños */}
                     <label className="form-label">Baños</label>
                     <input
                         type="number"
@@ -89,13 +86,15 @@ export const HouseFilter = ({ onFilter }) => {
                         placeholder="Ej: 2"
                     />
                 </div>
-                <div className="col-md-2 d-flex gap-2">
-                    <button type="submit" className="btn btn-primary w-100">
-                        Filtrar
-                    </button>
-                    <button type="button" className="btn btn-secondary w-100" onClick={handleClear}>
-                        Limpiar Filtros
-                    </button>
+                <div className="col-md-2">
+                    <div className="d-flex gap-2 align-items-end h-100">
+                        <button type="submit" className="btn btn-primary w-100 h-100">
+                            Filtrar
+                        </button>
+                        <button type="button" className="btn btn-secondary w-100 h-100" onClick={handleClear}>
+                            Limpiar
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
