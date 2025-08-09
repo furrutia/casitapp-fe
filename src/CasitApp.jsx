@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Importa useEffect
 import { Login } from './components/Login';
 import { HouseFilter } from './components/HouseFilter';
 import { HouseList } from './components/HouseList';
@@ -16,11 +16,16 @@ export const CasitApp = () => {
     const [editHouse, setEditHouse] = useState(null);
     const [selectedHouse, setSelectedHouse] = useState(null);
 
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(storedUser);
+            setLoggedIn(true);
+        }
+    }, []);
+
     const {
-        houses,
-        setHouses,
         favorites,
-        setFavorites,
         filters,
         setFilters,
         sortedHouses,
@@ -33,16 +38,21 @@ export const CasitApp = () => {
     const handleLogin = ({ user }) => {
         setLoggedIn(true);
         setUser(user);
+        localStorage.setItem('user', user); // Guarda el usuario en localStorage
     };
 
     const handleLogout = () => {
         setLoggedIn(false);
         setUser(null);
+        localStorage.removeItem('user'); // Elimina el usuario de localStorage
     };
 
     const handleFilterChange = (newFilters) => setFilters(newFilters);
 
-    const handleHouseClick = (house) => setSelectedHouse(house);
+    const handleHouseClick = (house) => {
+        setShowFavorites(false);
+        setSelectedHouse(house);
+    }
 
     const handleBack = () => setSelectedHouse(null);
 

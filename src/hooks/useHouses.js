@@ -13,16 +13,20 @@ export function useHouses(initialHouses) {
     });
 
     const filteredHouses = filterHouses(houses, filters);
+    
     const sortedHouses = sortHouses(filteredHouses);
 
     const addHouse = (house) => setHouses([...houses, house]);
+    
     const updateHouse = (updatedHouse) =>
         setHouses(houses.map(h => h.id === updatedHouse.id ? updatedHouse : h));
+
     const addFavorite = (house) => {
         if (!favorites.some(fav => fav.id === house.id)) {
             setFavorites([...favorites, house]);
         }
     };
+
     const removeFavorite = (house) =>
         setFavorites(favorites.filter(fav => fav.id !== house.id));
 
