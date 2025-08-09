@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { neighborhoods } from '../data';
+import { NEIGHBORHOODS } from '../data/neighborhoods';
 
 export const HouseFilter = ({ onFilter, filters }) => {
     const [valueFrom, setValueFrom] = useState(filters.valueFrom || '');
@@ -26,7 +26,6 @@ export const HouseFilter = ({ onFilter, filters }) => {
         <form onSubmit={handleFilter} className="mb-4">
             <div className="row g-3 align-items-end">
                 <div className="col-md-3">
-                    {/* Barrio */}
                     <label className="form-label">Barrio</label>
                     <input
                         type="text"
@@ -37,13 +36,12 @@ export const HouseFilter = ({ onFilter, filters }) => {
                         placeholder="Seleccione un barrio"
                     />
                     <datalist id="neighborhoods">
-                        {neighborhoods.map(barrio => (
+                        {NEIGHBORHOODS.map(barrio => (
                             <option key={barrio} value={barrio} />
                         ))}
                     </datalist>
                 </div>
                 <div className="col-md-2">
-                    {/* Valor desde */}
                     <label className="form-label">Valor desde</label>
                     <input
                         type="number"
@@ -54,7 +52,6 @@ export const HouseFilter = ({ onFilter, filters }) => {
                     />
                 </div>
                 <div className="col-md-2">
-                    {/* Valor hasta */}
                     <label className="form-label">Valor hasta</label>
                     <input
                         type="number"
@@ -65,7 +62,6 @@ export const HouseFilter = ({ onFilter, filters }) => {
                     />
                 </div>
                 <div className="col-md-2">
-                    {/* Ambientes */}
                     <label className="form-label">Ambientes</label>
                     <input
                         type="number"
@@ -76,7 +72,6 @@ export const HouseFilter = ({ onFilter, filters }) => {
                     />
                 </div>
                 <div className="col-md-1">
-                    {/* Baños */}
                     <label className="form-label">Baños</label>
                     <input
                         type="number"

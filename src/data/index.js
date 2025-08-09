@@ -1,2 +1,2 @@
-export * from './dataHouse';
+export * from './initialHouses';
 export * from './neighborhoods';

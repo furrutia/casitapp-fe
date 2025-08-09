@@ -25,6 +25,11 @@ export const HouseDetail = ({ house, onBack, onAddFavorite, onRemoveFavorite, is
                             Quitar de Favoritos
                         </button>
                     )}
+                    {!isFavorite && (
+                        <button className="btn btn-primary btn-sm" onClick={handleAddFavorite}>
+                            Agregar a Favoritos
+                        </button>
+                    )}
                 </div>
                 <p><strong>Valor:</strong> ${house.value}</p>
                 <p><strong>Ambientes:</strong> {house.rooms}</p>
@@ -47,8 +52,11 @@ export const HouseDetail = ({ house, onBack, onAddFavorite, onRemoveFavorite, is
                     </div>
                 </div>
                 {showAlert && (
-                    <div className="alert alert-success" role="alert">
-                        {isFavorite ? '¡Casa quitada de favoritos!' : '¡Casa agregada a favoritos!'}
+                    <div
+                        className={`alert ${isFavorite ? 'alert-success' : 'alert-danger'}`}
+                        role="alert"
+                    >
+                        {isFavorite ? '¡Casa agregada a favoritos!' : '¡Casa quitada de favoritos!'}
                     </div>
                 )}
                 <div className="d-flex gap-2 mt-3">

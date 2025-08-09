@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { neighborhoods } from '../data';
+import { NEIGHBORHOODS } from '../data/neighborhoods';
+import { isValidNeighborhood } from '../services/validationService';
 
 export const AddHouseForm = ({
     onAdd,
@@ -7,18 +8,23 @@ export const AddHouseForm = ({
     initialData = {},
     isEdit = false
 }) => {
-    const [neighborhood, setNeighborhood] = useState(initialData.neighborhood || '');
-    const [value, setValue] = useState(initialData.value || '');
-    const [rooms, setRooms] = useState(initialData.rooms || '');
-    const [bathrooms, setBathrooms] = useState(initialData.bathrooms || '');
-    const [description, setDescription] = useState(initialData.description || '');
-    const [images, setImages] = useState(initialData.images || []);
+    const [form, setForm] = useState({
+        neighborhood: initialData.neighborhood || '',
+        value: initialData.value || '',
+        rooms: initialData.rooms || '',
+        bathrooms: initialData.bathrooms || '',
+        description: initialData.description || '',
+        images: initialData.images || []
+    });
     const [preview, setPreview] = useState(initialData.images || []);
     const [error, setError] = useState('');
 
+    const handleChange = ({ target }) => {
+        setForm({ ...form, [target.name]: target.value });
+    };
+
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        setImages(files);
         const previews = files.map(file => URL.createObjectURL(file));
         setPreview([...preview, ...previews]);
     };
@@ -29,18 +35,17 @@ export const AddHouseForm = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!neighborhoods.includes(neighborhood)) {
+        if (!isValidNeighborhood(form.neighborhood)) {
             setError('El barrio debe ser uno de los permitidos.');
             return;
         }
         setError('');
         onAdd({
             id: initialData.id || Date.now(),
-            neighborhood,
-            value: Number(value),
-            rooms: Number(rooms),
-            bathrooms: Number(bathrooms),
-            description,
+            ...form,
+            value: Number(form.value),
+            rooms: Number(form.rooms),
+            bathrooms: Number(form.bathrooms),
             images: preview
         });
         onCancel();
@@ -57,13 +62,14 @@ export const AddHouseForm = ({
                             type="text"
                             className="form-control"
                             list="neighborhoods"
-                            value={neighborhood}
-                            onChange={e => setNeighborhood(e.target.value)}
+                            name="neighborhood"
+                            value={form.neighborhood}
+                            onChange={handleChange}
                             required
                             placeholder="Seleccione un barrio"
                         />
                         <datalist id="neighborhoods">
-                            {neighborhoods.map(barrio => (
+                            {NEIGHBORHOODS.map(barrio => (
                                 <option key={barrio} value={barrio} />
                             ))}
                         </datalist>
@@ -72,20 +78,20 @@ export const AddHouseForm = ({
                     <div className="row mb-2">
                         <div className="col-md-4">
                             <label className="form-label">Valor</label>
-                            <input type="number" className="form-control" value={value} onChange={e => setValue(e.target.value)} required />
+                            <input type="number" className="form-control" name="value" value={form.value} onChange={handleChange} required />
                         </div>
                         <div className="col-md-4">
                             <label className="form-label">Ambientes</label>
-                            <input type="number" className="form-control" value={rooms} onChange={e => setRooms(e.target.value)} required />
+                            <input type="number" className="form-control" name="rooms" value={form.rooms} onChange={handleChange} required />
                         </div>
                         <div className="col-md-4">
                             <label className="form-label">Baños</label>
-                            <input type="number" className="form-control" value={bathrooms} onChange={e => setBathrooms(e.target.value)} required />
+                            <input type="number" className="form-control" name="bathrooms" value={form.bathrooms} onChange={handleChange} required />
                         </div>
                     </div>
                     <div className="mb-2">
                         <label className="form-label">Descripción</label>
-                        <input type="text" className="form-control" value={description} onChange={e => setDescription(e.target.value)} required />
+                        <input type="text" className="form-control" name="description" value={form.description} onChange={handleChange} required />
                     </div>
                     <div className="mb-2">
                         <label className="form-label">Imágenes</label>

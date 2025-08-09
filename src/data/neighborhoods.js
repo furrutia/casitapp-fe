@@ -1,4 +1,4 @@
-export const neighborhoods = [
+export const NEIGHBORHOODS = [
     "Alvarez del Bosque",
     "Fincas de Alvarez",
     "Haras Maria Elena",

@@ -1,5 +1,5 @@
 
-export const dataHouse = [
+export const initialHouses = [
     {
         id: 1,
         neighborhood: "Prados del Oeste",
